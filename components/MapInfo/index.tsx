@@ -21,7 +21,6 @@ function MapInfo() {
       map.flyTo(e.latlng, map.getZoom());
     },
   });
-
   const map1 = useMapEvents({
     mousemove(ev) {
       panelDiv.innerHTML = `<h2><span>Lat: ${ev.latlng.lat.toFixed(
