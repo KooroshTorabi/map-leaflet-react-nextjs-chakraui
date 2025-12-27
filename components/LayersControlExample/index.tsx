@@ -11,8 +11,8 @@ import {
   TileLayer,
   GeoJSON,
 } from "react-leaflet";
-// import "leaflet/dist/leaflet.css";
 import "leaflet/dist/leaflet.css";
+
 import MapInfo from "../MapInfo";
 const center: any = [51.505, -0.09];
 const rectangle: any = [
@@ -24,6 +24,7 @@ import * as L from "leaflet";
 import MarkerIcon from "../../assets/images/glass-marker.png";
 import markerShadowIcon from "../../assets/images/marker-shadow.png";
 import fields from "../../consts/getdata.json";
+import { Button } from "@chakra-ui/react";
 function LayersControlExample() {
   const [color = "black"] = useState();
   const colors = ["green", "blue", "yellow", "orange", "grey"];
@@ -60,19 +61,32 @@ function LayersControlExample() {
     lat: 48.20849275540877, 
     lng: 16.373224764018673,
   });
+  const initialMarkerPosition = {
+    lat: 48.20849275540877, 
+    lng: 16.373224764018673,
+  };
   const [zoom, setZoom] = useState(10);
   const [draggable, setDraggable] = useState(true);
 
   const markerPosition: any = [marker.lat, marker.lng];
   const refmarker = useRef(null);
+  
   const toggleDraggable = () => {
+    if (draggable) {
+      // When fixing position (draggable is currently true), reset to initial
+      setMarker(initialMarkerPosition);
+    }
+    // Toggle draggable state
     setDraggable(!draggable);
   };
 
   const updateMarker = (e: any) => {
-    // const marker = e.marker;
-    setMarker(e.marker.getLatLng());
-    console.log(e.marker.getLatLng());
+    // Update position when marker is dragged
+    const newLatLng = e.target.getLatLng();
+    setMarker({
+      lat: newLatLng.lat,
+      lng: newLatLng.lng,
+    });
   };
 
   const updatePosition = () => {
@@ -80,32 +94,29 @@ function LayersControlExample() {
     if (marker != null) {
       setMarker(marker.leafletElement.getLatLng());
     }
-    // console.log(marker.leafletElement.getLatLng());
   };
 
   return (
     <MapContainer
-      //   center={[51.505, -0.09]}
-      //   zoom={13}
-      //   scrollWheelZoom={false}
-      //   style={{ height: "100%" }} // Add a height
-      style={{ height: "98vh", width: "100%" }}
+      style={{ height: "100vh", width: "100%" }}
       center={[48.20849275540877, 16.373224764018673]}
       zoom={13}
+      scrollWheelZoom={true}
+      zoomControl={true}
     >
       <LayersControl position="topright">
         <LayersControl.BaseLayer checked name="OpenStreetMap.Mapnik">
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright11111">kouroshtorabi</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
         </LayersControl.BaseLayer>
-        {/* <LayersControl.BaseLayer name="OpenStreetMap.BlackAndWhite">
+        <LayersControl.BaseLayer name="OpenStreetMap.BlackAndWhite">
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png"
           />
-        </LayersControl.BaseLayer> */}
+        </LayersControl.BaseLayer>
         <LayersControl.Overlay name="Marker with popup">
           <Marker position={center}>
             <Popup>
@@ -133,17 +144,18 @@ function LayersControlExample() {
                 radius={100}
               />
               <Marker
-                draggable={true}
-                // onDragend={updatePosition}
+                draggable={draggable}
+                eventHandlers={{ dragend: updateMarker }}
                 position={markerPosition}
-                // animate={true}
                 ref={refmarker}
               >
                 <Popup minWidth={90}>
                   <span onClick={toggleDraggable}>
                     {draggable ? "Stephans Dom" : "MARKER FIXED"} 
                     <br/> 
-                    Click to {" "} {draggable ? "fix" : "move"}
+                    <Button colorScheme={draggable ? "red" : "green"}> 
+                      Click to {" "} {draggable ? "fix" : "move"}
+                    </Button>
                   </span>
                 </Popup>
               </Marker>
