@@ -1,3 +1,4 @@
+"use client"
 import { Component, createRef, useEffect, useState, useRef } from "react";
 import {
   Circle,
@@ -24,13 +25,17 @@ import * as L from "leaflet";
 import MarkerIcon from "../../assets/images/glass-marker.png";
 import markerShadowIcon from "../../assets/images/marker-shadow.png";
 import fields from "../../consts/getdata.json";
-import { Button } from "@chakra-ui/react";
+import { Button, Center, Text } from "@chakra-ui/react";
+
 function LayersControlExample() {
   const [color = "black"] = useState();
   const colors = ["green", "blue", "yellow", "orange", "grey"];
+  const mapRef = useRef(null); // Add this ref for the map
+  
   useEffect(() => {
     console.log("LayersControlExample");
   }, []);
+  
   const glassIcon = new L.Icon({
     iconUrl: MarkerIcon.src,
     iconSize: [26, 26],
@@ -46,13 +51,13 @@ function LayersControlExample() {
   };
 
   const changeFieldColor = (event: any) => {
-    // Tıklayınca olacak işlemler
     event.target.setStyle({
-      fillColor: color, // Rengi
-      color: "green", // Border rengi
-      fillOpacity: 1, // Opaklığı
+      fillColor: color,
+      color: "green",
+      fillOpacity: 1,
     });
   };
+  
   const [center, setCenter] = useState({
     lat: 48.20849275540877, 
     lng: 16.373224764018673,
@@ -73,15 +78,12 @@ function LayersControlExample() {
   
   const toggleDraggable = () => {
     if (draggable) {
-      // When fixing position (draggable is currently true), reset to initial
       setMarker(initialMarkerPosition);
     }
-    // Toggle draggable state
     setDraggable(!draggable);
   };
 
   const updateMarker = (e: any) => {
-    // Update position when marker is dragged
     const newLatLng = e.target.getLatLng();
     setMarker({
       lat: newLatLng.lat,
@@ -89,21 +91,43 @@ function LayersControlExample() {
     });
   };
 
-  const updatePosition = () => {
-    const marker: any = refmarker.current;
-    if (marker != null) {
-      setMarker(marker.leafletElement.getLatLng());
+  const centerMap = () => {
+    const latLng = {lat: initialMarkerPosition.lat, lng: initialMarkerPosition.lng};
+    setMarker(latLng);
+    setCenter(latLng);
+    
+    // Animate to center with smooth transition
+    if (mapRef.current) {
+      mapRef.current.flyTo(
+        [initialMarkerPosition.lat, initialMarkerPosition.lng], 
+        17,
+        {
+          duration: 7, // animation duration in seconds
+        }
+      );
     }
+    console.log("Centered on position:", latLng);
   };
 
   return (
     <MapContainer
+      ref={mapRef}
       style={{ height: "100vh", width: "100%" }}
       center={[48.20849275540877, 16.373224764018673]}
-      zoom={13}
+      zoom={17}
       scrollWheelZoom={true}
       zoomControl={true}
     >
+      <Center mt={12}>
+        <Button
+          mt={2}
+          colorScheme="blue"
+          style={{ position: "absolute", zIndex: 1000, margin: "10px" }}
+          onClick={centerMap}
+        >
+          Center Position 
+        </Button>
+      </Center>
       <LayersControl position="topright">
         <LayersControl.BaseLayer checked name="OpenStreetMap.Mapnik">
           <TileLayer
@@ -177,4 +201,5 @@ function LayersControlExample() {
     </MapContainer>
   );
 }
+
 export default LayersControlExample;
