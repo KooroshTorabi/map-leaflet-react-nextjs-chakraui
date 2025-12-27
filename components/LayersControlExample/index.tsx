@@ -53,12 +53,12 @@ function LayersControlExample() {
     });
   };
   const [center, setCenter] = useState({
-    lat: 40.17823848073122,
-    lng: 44.505526364375804,
+    lat: 48.20849275540877, 
+    lng: 16.373224764018673,
   });
   const [marker, setMarker] = useState({
-    lat: 40.17823848073122,
-    lng: 44.505526364375804,
+    lat: 48.20849275540877, 
+    lng: 16.373224764018673,
   });
   const [zoom, setZoom] = useState(10);
   const [draggable, setDraggable] = useState(true);
@@ -90,7 +90,7 @@ function LayersControlExample() {
       //   scrollWheelZoom={false}
       //   style={{ height: "100%" }} // Add a height
       style={{ height: "98vh", width: "100%" }}
-      center={[40.17823848073122, 44.505526364375804]}
+      center={[48.20849275540877, 16.373224764018673]}
       zoom={13}
     >
       <LayersControl position="topright">
@@ -128,11 +128,10 @@ function LayersControlExample() {
             />
             <LayerGroup>
               <Circle
-                center={[40.17823848073122, 44.505526364375804]}
+                center={[48.20849275540877, 16.373224764018673]}
                 pathOptions={{ color: "green", fillColor: "green" }}
                 radius={100}
               />
-
               <Marker
                 draggable={true}
                 // onDragend={updatePosition}
@@ -142,7 +141,9 @@ function LayersControlExample() {
               >
                 <Popup minWidth={90}>
                   <span onClick={toggleDraggable}>
-                    {draggable ? "Yerevan Blue Mosque" : "MARKER FIXED"}
+                    {draggable ? "Stephans Dom" : "MARKER FIXED"} 
+                    <br/> 
+                    Click to {" "} {draggable ? "fix" : "move"}
                   </span>
                 </Popup>
               </Marker>
@@ -153,7 +154,7 @@ function LayersControlExample() {
           <FeatureGroup pathOptions={{ color: "purple" }}>
             <Popup>Popup in FeatureGroup</Popup>
             <Circle
-              center={[40.17823848073122, 44.505526364375804]}
+              center={[48.20849275540877, 16.373224764018673]}
               radius={200}
             />
             <Rectangle bounds={rectangle} />
