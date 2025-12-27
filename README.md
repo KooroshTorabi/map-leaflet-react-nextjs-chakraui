@@ -1,37 +1,80 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Interactive Leaflet Map Application
 
-## Getting Started
+A modern web application for interactive mapping built with **Next.js 16**, **React 18**, and **Leaflet**. Features real-time map visualization with draggable markers, layer controls, geosearch capabilities, and custom popups.
 
-First, run the development server:
+## 🚀 Features
+
+- **Interactive Maps** - Leaflet-based mapping with tile layers
+- **Draggable Markers** - Move markers freely on the map
+- **Layer Controls** - Toggle between multiple map layers
+- **Geosearch** - Built-in location search functionality
+- **Custom Popups** - Information popups on map features
+- **Responsive Design** - Mobile-friendly interface
+- **Type-Safe** - Full TypeScript support
+
+## 🛠️ Tech Stack
+
+- **Next.js 16** (App Router)
+- **React 18** with React Leaflet v5
+- **TypeScript 5.9**
+- **Emotion** (CSS-in-JS)
+- **Leaflet 1.7** with Geosearch plugin
+
+## ⚡ Quick Start
+
+### Prerequisites
+- Node.js 18+ and npm
+
+### Installation
 
 ```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the map.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## 📦 Build & Deploy
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+# Production build
+npm run build
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+# Start production server
+npm start
 
-## Learn More
+# Run linter
+npm run lint
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 📁 Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+├── app/                    # App Router pages
+│   ├── layout.tsx         # Root layout with metadata
+│   ├── page.tsx           # Home page
+│   └── api/hello/route.ts # API endpoint
+├── components/            # Reusable React components
+│   ├── LayersControlExample/
+│   ├── DraggableMarker/
+│   ├── PopupExample/
+│   └── ...
+├── styles/               # Global styles
+├── consts/              # Constants and data
+└── public/              # Static assets
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 🗺️ Available Components
 
-## Deploy on Vercel
+- **LayersControlExample** - Multi-layer map with toggleable controls
+- **DraggableMarker** - Movable markers on the map
+- **PopupExample** - Information popups
+- **MapInfo** - Map metadata display
+- **Map1** - Basic map setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-
----=========-------
+MIT
